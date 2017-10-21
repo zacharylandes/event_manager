@@ -1,48 +1,40 @@
 #
 require 'shellwords'
+require './queue'
 require 'csv'
 
+class EventReporter
 def load( file = 'full_event_attendees.csv')
-  CSV.open file, headers: true, header_converters: :symbol
-# contents.each do |row|
-#  p row
-# end
+CSV.open file, headers: true, header_converters: :symbol
 end
-
 
 def clean_zipcode(zipcode)
   zipcode.to_s.rjust(5,"0")[0..4]
 end
-BUILTINS = {
-  'cd' => lambda { |dir| Dir.chdir(dir) },
-  'exit' => lambda { |code = 0| exit(code.to_i) },
-  'exec' =>  lambda { |*command| exec *command },
-  'find' =>  lambda do |command|
+
+def find(command)
       load.each do |row|
-        case command
-        when "name"
-           p  row[:last_name]
-        when "state"
-           p row[:state]
-        when "zipcode"
-        p  clean_zipcode(row[:zipcode])
-      end
+        input(command, row)
     end
-    end
+end
+
+
+def input(command,row)
+      p  row[:last_name] if command == "name"
+      p  row[:state] if command == "state"
+      p   clean_zipcode(row[:zipcode])if command == "zipcode"
+end
+
+end
+e = EventReporter.new
+
+BUILTINS = {
+  # 'cd' => lambda { |dir| Dir.chdir(dir) },
+   'exit' => lambda { |code = 0| exit(code.to_i) },
+  'find' =>  lambda { |command| e.find(command)},
+  'load' =>  lambda { e.load}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 loop do
   $stdout.print '-> '
@@ -57,41 +49,36 @@ loop do
     }
 
     Process.wait pid
+
   end
+
+
 end
 
 
 
 # require 'readline'
 #  require 'csv'
-#  require 'pry'
-#
-#
-# class EventReporter
-#   def make_shell#(input= ,input)
-#     # list = ARGV[1]
-# while input = Readline.readline("> ", true)
-#   case input
-#   when "exit"
-#     break
-#   when "load"
-#     load
-#   when "find"
-#     # binding.pry
-#       find
-# end
-# end
-# end
-# #
-def find(query)
-load
- case query
-    when "name"
-       p "yo"# row[:last_name]
-    when "state"
-       p row[:state]
-    when "zipcode"
-    p  clean_zipcode(row[:zipcode])
-  end
 
-end
+
+
+
+# def print_attendees
+# load.each do |row|
+#  p row
+# end
+# end
+#
+
+#
+#
+#
+#
+# # Readline::HISTORY.pop if input == ""
+# # system(input)
+# # comp = proc { |s| Readline::HISTORY.grep(/^#{Regexp.escape(s)}/) }
+# # Readline.completion_append_character = " "
+# # Readline.completion_proc = comp
+# end
+# e =EventReporter.new
+# e.make_shell
