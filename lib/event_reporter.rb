@@ -1,9 +1,16 @@
 #
 require 'shellwords'
-require './queue'
 require 'csv'
+require 'pry'
+require_relative 'queue'
+
 
 class EventReporter
+  def initialize
+    @queue = []
+    @count = 0
+  end
+
 def load( file = 'full_event_attendees.csv')
 CSV.open file, headers: true, header_converters: :symbol
 end
@@ -12,37 +19,77 @@ def clean_zipcode(zipcode)
   zipcode.to_s.rjust(5,"0")[0..4]
 end
 
-def find(command)
-      load.each do |row|
-        input(command, row)
-    end
+def find(attribute, criteria)
+  load.find_all do |row|
+      input(attribute, criteria, row)
+  end
 end
 
+def add_to_queue(row)
+  @queue << row
+end
 
-def input(command,row)
-      p  row[:last_name] if command == "name"
-      p  row[:state] if command == "state"
-      p   clean_zipcode(row[:zipcode])if command == "zipcode"
+def email(attribute,criteria,row)
+  if attribute == "email" && criteria == row[:email_address]
+    add_to_queue(row)
+    p row[:email_address]
+  end
+end
+
+def first_name(attribute,criteria,row)
+  if attribute == "first_name" && criteria.downcase == row[:first_name].downcase
+    add_to_queue(row)
+    p row
+  end
+end
+def last_name(attribute,criteria,row)
+  if attribute == "last_name" && criteria.downcase == row[:last_name].downcase
+    add_to_queue(row)
+    p row
+  end
+end
+
+def zip(attribute,criteria,row)
+  if attribute == "zipcode" && criteria == row[:zipcode]
+    add_to_queue(row)
+    p row
+  end
+end
+
+def state(attribute,criteria,row)
+  if attribute == "state" &&  criteria == row[:state]
+  p row
+end
+end
+
+def input(attribute,criteria,row)
+  attribute = attribute.strip
+    first_name(attribute,criteria,row)
+    last_name(attribute,criteria,row)
+    state(attribute,criteria,row)
+    zip(attribute,criteria,row)
+    email(attribute,criteria,row)
 end
 
 end
+
 e = EventReporter.new
 
 BUILTINS = {
-  # 'cd' => lambda { |dir| Dir.chdir(dir) },
-   'exit' => lambda { |code = 0| exit(code.to_i) },
-  'find' =>  lambda { |command| e.find(command)},
-  'load' =>  lambda { e.load}
+  'exit' => lambda { |code = 0| exit(code.to_i) },
+  'find' =>  lambda { |attribute,criteria| e.find(attribute, criteria)},
+  'load' =>  lambda { e.load},
+  'queue' => lambda { |command| e.queue}
 
 }
 
 loop do
   $stdout.print '-> '
   line = $stdin.gets.strip
-  command, *arguments = Shellwords.shellsplit(line)
+  attribute, *arguments = Shellwords.shellsplit(line)
 
-  if BUILTINS[command]
-    BUILTINS[command].call(*arguments)
+  if BUILTINS[attribute]
+    BUILTINS[attribute].call(*arguments)
   else
     pid = fork {
       exec line
@@ -51,9 +98,29 @@ loop do
     Process.wait pid
 
   end
-
-
 end
+
+
+#
+#
+# class List
+#
+#   attr_reader :count, :add
+#
+# def initialize
+#   @queue = []
+#   @count = 0
+# end
+# def count
+#   @count+=1
+#   p @count
+# end
+# def add(row)
+#   @queue << row
+# end
+# def print
+# end
+# end
 
 
 

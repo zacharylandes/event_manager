@@ -5,7 +5,7 @@ e = EventReporter.new
 BUILTINS = {
   # 'cd' => lambda { |dir| Dir.chdir(dir) },
   'exit' => lambda { |code = 0| exit(code.to_i) },
-  'find' =>  lambda { |command, item| e.find(command)},
+  'find' =>  lambda { |command, item| e.find(command, cirteria)},
   'load' =>  lambda { e.load}
 
 }
@@ -21,10 +21,7 @@ loop do
     pid = fork {
       exec line
     }
-
     Process.wait pid
-
   end
-
 
 end
