@@ -2,13 +2,14 @@
 require 'shellwords'
 require 'csv'
 require 'pry'
-require_relative 'queue'
+require './queue'
 
 
 class EventReporter
   def initialize
     @queue = []
     @count = 0
+    # @q ||= Queue.new
   end
 
 def load( file = 'full_event_attendees.csv')
@@ -24,9 +25,13 @@ def find(attribute, criteria)
       input(attribute, criteria, row)
   end
 end
-
+def make_queue
+  @q ||=Queue.new
+end
 def add_to_queue(row)
-  @queue << row
+make_queue
+  @q.add(row)
+# binding.pry
 end
 
 def email(attribute,criteria,row)
@@ -39,7 +44,7 @@ end
 def first_name(attribute,criteria,row)
   if attribute == "first_name" && criteria.downcase == row[:first_name].downcase
     add_to_queue(row)
-    p row
+    # p row
   end
 end
 def last_name(attribute,criteria,row)
@@ -74,13 +79,17 @@ end
 end
 
 e = EventReporter.new
+# @q = Queue.new
+# q.run
 
 BUILTINS = {
   'exit' => lambda { |code = 0| exit(code.to_i) },
   'find' =>  lambda { |attribute,criteria| e.find(attribute, criteria)},
   'load' =>  lambda { e.load},
-  'queue' => lambda { |command| e.queue}
-
+  'queue' => lambda do |method|
+    # binding.pry
+    e.make_queue.run(method)
+  end
 }
 
 loop do
