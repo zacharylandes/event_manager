@@ -2,7 +2,8 @@
 require 'shellwords'
 require 'csv'
 require 'pry'
-require './queue'
+require_relative 'queue'
+# require '../lib/queue'
 
 
 class EventReporter
@@ -30,51 +31,54 @@ end
 def make_queue
   @q ||=Queue.new
 end
+
 def delete_queue
 @q = nil
 end
+
 def add_to_queue(row)
 make_queue
   @q.add(row)
-# binding.pry
+# binding.pr
 end
 
 def email(attribute,criteria,row)
   if attribute == "email" && criteria == row[:email_address]
     add_to_queue(row)
-    p row[:email_address]
+    #  row[:email_address]
   end
 end
 
 def first_name(attribute,criteria,row)
   if attribute == "first_name" && criteria.downcase == row[:first_name].downcase
     add_to_queue(row)
-    # p row
+
   end
 end
 def last_name(attribute,criteria,row)
   if attribute == "last_name" && criteria.downcase == row[:last_name].downcase
     add_to_queue(row)
-    p row
+    row
   end
 end
 
 def zip(attribute,criteria,row)
   if attribute == "zipcode" && criteria == row[:zipcode]
     add_to_queue(row)
-    p row
+    row
   end
 end
 
 def state(attribute,criteria,row)
   if attribute == "state" &&  criteria == row[:state]
-  p row
+    add_to_queue(row)
+    row[:state]
+   row
 end
 end
 
 def input(attribute,criteria,row)
   attribute = attribute.strip
-    # delete_queue
     first_name(attribute,criteria,row)
     last_name(attribute,criteria,row)
     state(attribute,criteria,row)
