@@ -1,14 +1,17 @@
 require'./event_reporter'
 
 e = EventReporter.new
-
 BUILTINS = {
-  # 'cd' => lambda { |dir| Dir.chdir(dir) },
-  'exit' => lambda { |code = 0| exit(code.to_i) },
-  'find' =>  lambda { |command, item| e.find(command, cirteria)},
-  'load' =>  lambda { e.load}
 
+  'exit' => lambda { |code = 0| exit(code.to_i) },
+  'find' =>  lambda { |attribute,criteria| e.find(attribute, criteria)},
+  'load' =>  lambda { e.load},
+  'queue' => lambda do |method|
+    # binding.pry
+    e.make_queue.run(method)
+  end
 }
+
 
 loop do
   $stdout.print '-> '

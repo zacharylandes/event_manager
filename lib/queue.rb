@@ -11,9 +11,22 @@ def initialize
 end
 
 def run(method)
-  if method == "count"
+  case method
+  when "count"
       count
+  when "clear"
+    clear
+when "print"
+  qprint
+when "print by"
+  qprint_by
+when "save to"
+  save_to
+when "export html"
+  export
+
   end
+
 end
 
 def add(row)
@@ -22,7 +35,6 @@ def add(row)
 end
 
 def count
-  # @count+=1
   p @queue.count
 end
 #

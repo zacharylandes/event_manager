@@ -21,12 +21,17 @@ def clean_zipcode(zipcode)
 end
 
 def find(attribute, criteria)
+  delete_queue
   load.find_all do |row|
       input(attribute, criteria, row)
   end
 end
+
 def make_queue
   @q ||=Queue.new
+end
+def delete_queue
+@q = nil
 end
 def add_to_queue(row)
 make_queue
@@ -69,6 +74,7 @@ end
 
 def input(attribute,criteria,row)
   attribute = attribute.strip
+    # delete_queue
     first_name(attribute,criteria,row)
     last_name(attribute,criteria,row)
     state(attribute,criteria,row)
@@ -77,37 +83,29 @@ def input(attribute,criteria,row)
 end
 
 end
+#
+# e = EventReporter.new
+# # @q = Queue.new
+# # q.run
+#
+# BUILTINS = {
 
-e = EventReporter.new
-# @q = Queue.new
-# q.run
-
-BUILTINS = {
-  'exit' => lambda { |code = 0| exit(code.to_i) },
-  'find' =>  lambda { |attribute,criteria| e.find(attribute, criteria)},
-  'load' =>  lambda { e.load},
-  'queue' => lambda do |method|
-    # binding.pry
-    e.make_queue.run(method)
-  end
-}
-
-loop do
-  $stdout.print '-> '
-  line = $stdin.gets.strip
-  attribute, *arguments = Shellwords.shellsplit(line)
-
-  if BUILTINS[attribute]
-    BUILTINS[attribute].call(*arguments)
-  else
-    pid = fork {
-      exec line
-    }
-
-    Process.wait pid
-
-  end
-end
+# loop do
+#   $stdout.print '-> '
+#   line = $stdin.gets.strip
+#   attribute, *arguments = Shellwords.shellsplit(line)
+#
+#   if BUILTINS[attribute]
+#     BUILTINS[attribute].call(*arguments)
+#   else
+#     pid = fork {
+#       exec line
+#     }
+#
+#     Process.wait pid
+#
+#   end
+# end
 
 
 #
