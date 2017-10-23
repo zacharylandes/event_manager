@@ -1,31 +1,33 @@
-require'./event_reporter'
+require_relative 'test_helper'
+require '../lib/queue'
+require '../lib/event_reporter'
 
-e = EventReporter.new
+class QueueTest < Minitest::Test
+def test_it_makes_a_queue_class
 
+assert true, Queue.new
+end
 
-BUILTINS = {
-  # 'cd' => lambda { |dir| Dir.chdir(dir) },
-   'exit' => lambda { |code = 0| exit(code.to_i) },
-  'find' =>  lambda { |command| e.find(command)},
-  'load' =>  lambda { e.load}
+def test_it_can_count_the_queue
+e= EventReporter.new
+q= Queue.new
+e.find("last_name","becker")
+assert 3 , q.count
+end
 
-}
+def test_it_can_run_queue_methods
+q= Queue.new
 
-loop do
-  $stdout.print '-> '
-  line = $stdin.gets.strip
-  command, *arguments = Shellwords.shellsplit(line)
+assert 3 , q.run("count")
+end
 
-  if BUILTINS[command]
-    BUILTINS[command].call(*arguments)
-  else
-    pid = fork {
-      exec line
-    }
+def test_it_can_add_to_the_queue
+q= Queue.new
+q.add("bums")
+assert 1 , q.count
+end
 
-    Process.wait pid
-
-  end
-
+def test_it_can_print_the_queue
+end
 
 end
