@@ -6,9 +6,8 @@ BUILTINS = {
   'exit' => lambda { |code = 0| exit(code.to_i) },
   'find' =>  lambda { |attribute,criteria| e.find(attribute, criteria)},
   'load' =>  lambda { e.load},
-  'queue' => lambda do |method|
-    # binding.pry
-    e.make_queue.run(method)
+  'queue' => lambda do |method, *attribute|
+    e.make_queue.run(method, *attribute )
   end
 }
 
