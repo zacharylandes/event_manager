@@ -8,7 +8,7 @@ end
 
 def find
   contents.each do |row|
-      name = row[:last_name]
+      name = row[attribute.to_sym]
       state = row[:state]
       zipcode = clean_zipcode(row[:zipcode])
 
