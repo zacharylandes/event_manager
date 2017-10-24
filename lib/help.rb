@@ -23,11 +23,13 @@ attribute= attribute.join
   elsif  attribute == "export html"
       help_export
   else
+    # binding.pry
     print_all
   end
 end
 
 def print_all
+  # binding.pry
   commands = ["FIND-Loads a CSV file passed as an argument. Defaults to 'full_event_attendees.csv'",
   "LOAD-Loads a CSV file passed as an argument. Defaults to 'full_event_attendees.csv'",
   "QUEUE COUNT - counts the number of rows that have been found using find",
@@ -35,7 +37,7 @@ def print_all
   "QUEUE PRINT_BY - Prints all the items in the queue organized by specified criteria",
   "QUEUE SAVE_TO - Prints all the items in the queue",
   "QUEUE EXPORT HTML - Generates html file displaying CSV fields"]
-  puts commands
+   commands
 end
 
 def help_load

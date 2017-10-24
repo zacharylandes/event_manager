@@ -4,7 +4,7 @@ e = EventReporter.new
 
 BUILTINS = {
   'exit' =>  lambda { |code = 0| exit(code.to_i) },
-  'find' =>  lambda { |attribute,criteria| e.find(attribute, criteria)},
+  'find' =>  lambda { |attribute,*criteria| e.find(attribute, *criteria)},
   'load' =>  lambda {|*file| e.load(*file)},
   'help' =>  lambda {|*attribute| e.help(*attribute)},
   'queue' => lambda do |method, *attribute|
