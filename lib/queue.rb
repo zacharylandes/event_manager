@@ -14,7 +14,7 @@ class Queue
         qprint if method == "print"
         clear if method == "clear"
         qprint_by(attribute) if method == "print_by"
-        save_to if method == "save to"
+        save_to(attribute) if method == "save_to"
         export if method == "export html "
     end
 
@@ -47,7 +47,7 @@ class Queue
     end
 
     def qprint
-      format = '%-14s %-11s %-36s %-7s %-11s %7s %-28s %-13s '
+      format = '%-14s %-11s %-36s %-7s %-17s %7s %-28s %-13s '
       puts format % ['LAST NAME', 'FIRST NAME', 'EMAIL','ZIPCODE', 'CITY', 'STATE', 'ADDRESS', 'PHONE']
       @queue.each_with_index do |member, i|
         puts format % [ member[:last_name], member[:first_name],
@@ -55,14 +55,16 @@ class Queue
       end
     end
 
-    def save_to
-      # binding.pry
-    h = qprint # { 'dog' => 'canine', 'cat' => 'feline', 'donkey' => 'asinine' }
-  binding.pry
-    CSV.open("data.csv", "w", headers: h[0].keys) do |csv|
-      csv << h[0].values
-    end
-    p csv
+      def save_to(file)
+        # binding.pry
+        headers = ['LAST NAME', 'FIRST NAME', 'EMAIL','ZIPCODE', 'CITY', 'STATE', 'ADDRESS', 'PHONE']
+
+        CSV.open("data.csv", "wb") do |csv|
+csv << headers #if csv.count.eql? 0
+  @queue.each do |hash|
+    csv << hash
+  end
+end
 
   end
 
