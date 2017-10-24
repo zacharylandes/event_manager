@@ -1,4 +1,6 @@
 require_relative 'event_reporter'
+require_relative 'event_reporter'
+
 
 e = EventReporter.new
 

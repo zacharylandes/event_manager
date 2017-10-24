@@ -4,36 +4,27 @@ require 'csv'
 require 'pry'
 require_relative 'queue'
 require_relative 'help'
-
+require_relative 'clean'
 
 class EventReporter
+  include Clean
+  include Help
 
   def load(file = 'full_event_attendees.csv')
-      CSV.open file, headers: true, header_converters: :symbol
+      contents = CSV.open file, headers: true, header_converters: :symbol
+        contents.map {|csv|csv}
   end
 
   def find(attribute, *criteria)
     delete_queue
     load.find_all do |row|
       clean(attribute, criteria, row)
+      match(attribute,criteria,row)
     end
-  end
-
-  def clean_zipcodes(row)
-     if row == CSV::Row
-       return row[:zipcode] =  row[:zipcode].to_s.rjust(5,"0")[0..4]
-     elsif row.class == Integer
-       row = row.to_s.rjust(5,"0")[0..4]
-    end
-  end
-
-  def clean_phone_numbers(row)
-    row[:homephone] =  row[:homephone].gsub('-', '')
   end
 
   def help(*attribute)
-    h ||=Help.new
-    h.output(*attribute)
+    output(*attribute)
   end
 
   def make_queue
@@ -46,22 +37,16 @@ class EventReporter
 
   def add_to_queue(row)
     make_queue
-     row = row.to_hash  if row == CSV::Row
+    row = row.to_hash  if row == CSV::Row
     @q.add(row)
   end
 
   def match(attribute,criteria,row)
     row[attribute.to_sym] = "" if row[attribute.to_sym] == nil
-    if criteria.downcase == row[attribute.to_sym].downcase && criteria != nil
+    if criteria.join(' ').downcase == row[attribute.to_sym].downcase && criteria != nil
       add_to_queue(row)
     end
   end
 
-  def clean(attribute,criteria,row)
-    clean_zipcodes(row)
-    clean_phone_numbers(row)
-    attribute = attribute.strip
-    criteria = criteria.join(' ').strip
-    match(attribute,criteria,row)
-  end
+
 end
