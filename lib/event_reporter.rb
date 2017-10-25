@@ -8,7 +8,6 @@ require_relative 'clean'
 
 class EventReporter
   include Clean
-  include Help
 
   def load(file = 'full_event_attendees.csv')
       contents = CSV.open file, headers: true, header_converters: :symbol
@@ -21,10 +20,6 @@ class EventReporter
       clean(attribute, criteria, row)
       match(attribute,criteria,row)
     end
-  end
-
-  def help(*attribute)
-    output(*attribute)
   end
 
   def make_queue

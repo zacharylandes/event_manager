@@ -3,12 +3,13 @@ require_relative 'event_reporter'
 
 
 e = EventReporter.new
+h = Help.new
 
 BUILTINS = {
   'exit' =>  lambda { |code = 0| exit(code.to_i) },
   'find' =>  lambda { |attribute,*criteria| e.find(attribute, *criteria)},
   'load' =>  lambda {|*file| e.load(*file)},
-  'help' =>  lambda {|*attribute| e.help(*attribute)},
+  'help' =>  lambda {|*attribute| h.list_commands(*attribute)},
   'queue' => lambda do |method, *attribute|
     e.make_queue.run(method, *attribute )
 end
