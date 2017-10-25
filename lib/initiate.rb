@@ -1,5 +1,4 @@
 require_relative 'event_reporter'
-require_relative 'event_reporter'
 
 
 e = EventReporter.new
@@ -17,7 +16,7 @@ end
 
 
 loop do
-  $stdout.print '---> '
+  $stdout.print '-> '
   row = $stdin.gets.strip
   command, *arguments = Shellwords.shellsplit(row)
 

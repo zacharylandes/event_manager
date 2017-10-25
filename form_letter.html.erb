@@ -1,0 +1,42 @@
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Thank You!</title>
+<link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+<style>
+
+h1{
+  font-size: 40px;
+  margin: auto;
+  text-align: center;
+  font-family: 'Saira Extra Condensed', sans-serif;
+
+}
+table, td{
+    text-align: center;
+    border-style: solid;
+    border-width: 2px;
+    font-family: 'Saira Extra Condensed', sans-serif;
+    font-size: 20px;
+    margin: auto;
+  }
+body{
+  background-color: grey;
+
+}
+</style>
+</head>
+<body>
+<h1>Look at all dem people<h1>
+
+  <table>
+  <tr style="border-width:30px;"><th>Last Name</th><th>First Name</th><th>State</th><th>City</th><th>Phone</th><th>Street</th><th>Zip</th></tr>
+    <% @queue.each do |row| %>
+      <tr style="border-width:3px;" >
+        <td><%= "#{row[:first_name]}" %> </td>   <td><%= "#{row[:last_name]}" %> </td>   <td><%= "#{row[:state]}" %> </td>  <td><%= "#{row[:city]}" %> </td>
+         <td><%= "#{row[:homephone]}" %> </td> <td><%= "#{row[:street]}" %> </td>  <td><%= "#{row[:zipcode]}" %> </td>
+      </tr>
+    <% end %>
+  </table>
+</body>
+</html>

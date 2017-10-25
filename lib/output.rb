@@ -1,3 +1,4 @@
+require 'erb'
 
 module Output
 
@@ -15,8 +16,8 @@ module Output
       end
     end
 
-    def save_to(file)
-      CSV.open(file.join, "wb") do |csv|
+    def save_to(csv_file)
+      CSV.open(csv_file.join, "wb") do |csv|
           csv << @headers
           @queue.each { |hash| csv << hash }
       end
@@ -27,4 +28,17 @@ module Output
         @queue =  @queue.sort_by { |key| key[criteria]}
         print_format
     end
-end
+
+    def export(attribute = '', csv)
+        contents = CSV.open csv , headers: true, header_converters: :symbol
+        form_letter = ''
+        template_letter = File.read 'form_letter.html.erb'
+        erb_template = ERB.new template_letter
+        print_format
+        form_letter = erb_template.result(binding)
+        csv = csv.split('.')[0].split('').push('.''h','t','m','l').join
+        File.open(csv,'w') do |file|
+          file.puts form_letter
+        end
+      end
+  end

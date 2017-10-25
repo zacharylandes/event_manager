@@ -7,8 +7,8 @@ class Help
               :list_commands
 
   def initialize
-    @commands =     ["FIND-finds the record by specified attributes and criteria (i.e. 'find city sacramento')",
-        "LOAD-Loads a CSV file passed as an argument. Defaults to 'full_event_attendees.csv'",
+    @commands =   ["FIND-finds the record by specified attributes and criteria (i.e. 'find city sacramento')",
+        "LOAD-Loads a CSV file passed as an argument. Defaults to 'full_event_attendees.csv",
         "QUEUE COUNT - counts the number of rows that have been found using find",
         "QUEUE CLEAR- Empties the current queue",
         "QUEUE PRINT - Prints all the items in the queue",
@@ -20,7 +20,6 @@ class Help
 
   def list_commands(attribute = '', *criteria)
     return queue_help(*criteria) if attribute == "queue"
-# binding.pry
     return help_find if attribute == "find"
     return help_load if attribute == "load"
     puts @commands
@@ -28,7 +27,6 @@ class Help
 
   def queue_help(criteria = '', *suffix)
     return help_count if criteria == "count"
-    # binding.pry
     return help_print(*suffix) if criteria == "print"
     return help_save(*suffix) if criteria == "save"
     return help_export(*suffix) if criteria == "export"
@@ -36,36 +34,37 @@ class Help
   end
 
   def help_load
-    puts @commands[1]
+    p @commands[1]
   end
 
   def help_clear
-    puts @commands[3]
+    p @commands[3]
   end
 
   def help_find
-    puts @commands[0]
+    p @commands[0]
   end
 
   def help_count
-    binding.pry
-  puts @commands[2]
+    # binding.pry
+  p @commands[2].chomp
+  # @commands[2]
   end
 
   def help_print(*by)
     if by.join == 'by'
-      puts @commands[5]
+      p @commands[5]
     else
-      puts @commands[4]
+      p @commands[4]
     end
   end
 
   def help_save(*to)
-    puts @commands[6]
+    p @commands[6]
   end
 
   def help_export(*html)
-    puts @commands.last
+    p @commands.last
   end
 
 end

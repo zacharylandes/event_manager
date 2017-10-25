@@ -16,7 +16,7 @@ include Output
   def run(method,attribute='',*criteria)
     return count if method == "count"
     return clear if method == "clear"
-    return export if method == "export"
+    return export(attribute = '', *criteria) if method == "export"
     return save_to(criteria) if method == "save"
     return qprint(attribute, *criteria) if method == "print"
   end

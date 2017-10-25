@@ -17,6 +17,7 @@ class EventReporter
   def find(attribute, *criteria)
     delete_queue
     load.find_all do |row|
+      # binding.pry
       clean(attribute, criteria, row)
       match(attribute,criteria,row)
     end
