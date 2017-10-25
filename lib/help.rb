@@ -46,9 +46,7 @@ class Help
   end
 
   def help_count
-    # binding.pry
-  p @commands[2].chomp
-  # @commands[2]
+    p @commands[2].chomp
   end
 
   def help_print(*by)
