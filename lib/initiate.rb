@@ -1,11 +1,12 @@
 require_relative 'event_reporter'
 
-
+require 'pry'
 e = EventReporter.new
 h = Help.new
 
 BUILTINS = {
   'exit' =>  lambda { |code = 0| exit(code.to_i) },
+  'quit' =>  lambda { |code = 0| exit(code.to_i) },
   'find' =>  lambda { |attribute,*criteria| e.find(attribute, *criteria)},
   'load' =>  lambda {|*file| e.load(*file)},
   'help' =>  lambda {|*attribute| h.list_commands(*attribute)},

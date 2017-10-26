@@ -7,17 +7,23 @@ require_relative 'help'
 require_relative 'clean'
 
 class EventReporter
+  def initialize
+    @attendees = []
+  end
   include Clean
 
-  def load(file = 'full_event_attendees.csv')
+  def load(file = './full_event_attendees.csv')
+      delete_attendees
       contents = CSV.open file, headers: true, header_converters: :symbol
-        contents.map {|csv|csv}
+      contents.each do |row|
+        @attendees << row
+      end
+      @attendees
   end
 
   def find(attribute, *criteria)
     delete_queue
-    load.find_all do |row|
-      # binding.pry
+    @attendees.find_all do |row|
       clean(attribute, criteria, row)
       match(attribute,criteria,row)
     end
@@ -27,13 +33,20 @@ class EventReporter
     @q ||=Queue.new
   end
 
+  def delete_attendees
+    @attendees = []
+  end
+
   def delete_queue
     @q = nil
   end
 
+
   def add_to_queue(row)
     make_queue
-    row = row.to_hash  if row == CSV::Row
+    if row.class == CSV::Row
+      row = row.to_hash
+    end
     @q.add(row)
   end
 
@@ -43,6 +56,5 @@ class EventReporter
       add_to_queue(row)
     end
   end
-
 
 end

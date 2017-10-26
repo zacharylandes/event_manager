@@ -8,16 +8,21 @@ module Clean
     end
   end
 
-  def clean_phone_numbers(row)
-       if row.class == CSV::Row
-         row[:homephone] = row[:homephone].gsub('-', '')
-      elsif row.class == String
-          row = row.gsub('-', '')
-      end
-  end
+  # def arrange(row)
+  #   last_name = row[:last_name]
+  #   first_name = row[:first_name]
+  #   row[:last_name] = first_name
+  #   row[:first_name] = last_name
+  #   phone = row[:zipcode]
+  #   street = row[:city]
+  #   city= row[:state]
+  #   state = row[:add]
+  # end
+
   def clean(attribute,criteria,row)
+    row.delete(:regdate)
+    row.delete(:"")
     row[:zipcode] = clean_zipcodes(row) if row.class == CSV::Row
-    row[:homephone] = clean_phone_numbers(row) if row.class == CSV::Row
     attribute = attribute.strip
     criteria = criteria.join(' ').strip
   end
