@@ -14,7 +14,7 @@ def test_it_can_auto_run_queue_methods
 q= Queue.new
 
 assert_equal 0 , q.run("count")
-assert_equal nil , q.run("clear")
+assert_equal [] , q.run("clear")
 end
 
 def test_it_can_add_to_the_queue
@@ -38,7 +38,7 @@ end
 def test_it_can_clear_the_queue
   q= Queue.new
 
-  assert_equal nil, q.clear
+  assert_equal [], q.clear
 end
 
 end

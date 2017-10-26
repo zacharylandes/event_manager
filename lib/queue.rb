@@ -5,7 +5,8 @@ include Output
 
   attr_accessor  :queue,
                  :count,
-                 :run
+                 :run,
+                 :clear
 
   def initialize
     @queue = []
@@ -33,7 +34,7 @@ include Output
   end
 
   def clear
-    @queue = nil
+    @queue = []
   end
 
 end

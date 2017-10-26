@@ -30,11 +30,11 @@ body{
 <h1>Look at all dem people<h1>
 
   <table>
-  <tr style="border-width:30px;"><th>Last Name</th><th>First Name</th><th>State</th><th>City</th><th>Phone</th><th>Street</th><th>Zip</th></tr>
+  <tr style="border-width:30px;"><th>Last Name</th><th>First Name</th><th>Email</th><th>Zip Code</th><th>City</th><th>State</th><th>Address</th><th>Phone</th></tr>
     <% @queue.each do |row| %>
       <tr style="border-width:3px;" >
-        <td><%= "#{row[:first_name]}" %> </td>   <td><%= "#{row[:last_name]}" %> </td>   <td><%= "#{row[:state]}" %> </td>  <td><%= "#{row[:city]}" %> </td>
-         <td><%= "#{row[:homephone]}" %> </td> <td><%= "#{row[:street]}" %> </td>  <td><%= "#{row[:zipcode]}" %> </td>
+        <td><%= "#{row[:first_name]}" %> </td>   <td><%= "#{row[:last_name]}" %> </td>   <td><%= "#{row[:email_address]}" %> </td>  <td><%= "#{row[:zipcode]}" %> </td>
+         <td><%= "#{row[:city]}" %> </td> <td><%= "#{row[:state]}" %> </td>  <td><%= "#{row[:street]}" %> </td> <td><%= "#{row[:homephone]}" %> </td>
       </tr>
     <% end %>
   </table>
