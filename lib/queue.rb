@@ -13,6 +13,7 @@ include Output
     @format = '%-14s %-11s %-36s %-7s %-17s %7s %-28s %-13s'
     @headers = ['LAST NAME', 'FIRST NAME', 'EMAIL','ZIPCODE', 'CITY',
       'STATE', 'ADDRESS', 'PHONE']
+
   end
 
   def run(method,attribute='',*criteria)

@@ -40,9 +40,9 @@ class EventReporterTest < Minitest::Test
     reporter = EventReporter.new
     reporter.load
 
-    assert_equal ["asd"], reporter.add_to_queue("asd")
-    assert_equal ["asd", 90909], reporter.add_to_queue(90909)
-    refute_equal [90909], reporter.add_to_queue(90909)
+    assert_equal ["asd"], reporter.save_find("asd")
+    assert_equal ["asd", 90909], reporter.save_find(90909)
+    refute_equal [90909], reporter.save_find(90909)
   end
 
   def test_it_can_find_rows_by_first_name
@@ -81,7 +81,7 @@ class EventReporterTest < Minitest::Test
   def test_it_can_find_rows_by_phone
     reporter = EventReporter.new
     reporter.load
-
+    # binding.pry
     assert_equal "7208911000", reporter.find("homephone", "7208911000").first[3]
   end
 
@@ -111,8 +111,8 @@ class EventReporterTest < Minitest::Test
     reporter3.load
     row3 = {:state=>"ca"}
 
-    assert_equal [{:zipcode=>"99362"}], reporter2.match("zipcode", ["99362"],row2)
-    assert_equal [{:state=>"ca"}], reporter3.match("state", ["ca"],row3)
+    assert_equal [{:zipcode=>"99362"}], reporter2.match_rows("zipcode", ["99362"],row2)
+    assert_equal [{:state=>"ca"}], reporter3.match_rows("state", ["ca"],row3)
   end
 
 

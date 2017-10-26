@@ -8,7 +8,7 @@ module Clean
     end
   end
 
-  def clean(attribute,criteria,row)
+  def clean_rows(attribute,criteria,row)
     row.delete(:regdate)
     row.delete(:"")
     row[:zipcode] = clean_zipcodes(row) if row.class == CSV::Row

@@ -5,40 +5,40 @@ require 'pry'
 
 class QueueTest < Minitest::Test
 
-def test_it_makes_a_queue_class
-  assert_instance_of Queue, Queue.new
+  def test_it_makes_a_queue_class
+    assert_instance_of Queue, Queue.new
 
-end
+  end
 
-def test_it_can_auto_run_queue_methods
-q= Queue.new
-
-assert_equal 0 , q.run("count")
-assert_equal [] , q.run("clear")
-end
-
-def test_it_can_add_to_the_queue
-  q= Queue.new
-  q.add("bums")
-  q.add("more_bums")
-
-  assert_equal ["bums", "more_bums", "more_bums"] , q.add("more_bums")
-end
-
-def test_it_can_count_the_queue
-  q= Queue.new
-  q.add("bums")
-  q.add("more_bums")
-
-
-  assert_equal 2, q.queue.count
-end
-
-
-def test_it_can_clear_the_queue
+  def test_it_can_auto_run_queue_methods
   q= Queue.new
 
-  assert_equal [], q.clear
-end
+  assert_equal 0 , q.run("count")
+  assert_equal [] , q.run("clear")
+  end
+
+  def test_it_can_add_to_the_queue
+    q= Queue.new
+    q.add("bums")
+    q.add("more_bums")
+
+    assert_equal ["bums", "more_bums", "more_bums"] , q.add("more_bums")
+  end
+
+  def test_it_can_count_the_queue
+    q= Queue.new
+    q.add("bums")
+    q.add("more_bums")
+
+
+    assert_equal 2, q.queue.count
+  end
+
+
+  def test_it_can_clear_the_queue
+    q= Queue.new
+
+    assert_equal [], q.clear
+  end
 
 end

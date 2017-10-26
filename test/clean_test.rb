@@ -12,7 +12,7 @@ class CleanTest < Minitest::Test
 
   def test_it_can_clean_input
 
-    assert_equal "dani" , clean("first_name  ",["dani  "],[:regdate, "0233"])
+    assert_equal "dani" , clean_rows("first_name  ",["dani  "],[:regdate, "0233"])
   end
 
 end
