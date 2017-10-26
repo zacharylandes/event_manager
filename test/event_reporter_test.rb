@@ -110,9 +110,7 @@ class EventReporterTest < Minitest::Test
     reporter3 = EventReporter.new
     reporter3.load
     row3 = {:state=>"ca"}
-    # reporter.load
 
-    # assert_equal [{:first_name=>"jim"}], reporter1.match("first_name", ["jim"],row1)
     assert_equal [{:zipcode=>"99362"}], reporter2.match("zipcode", ["99362"],row2)
     assert_equal [{:state=>"ca"}], reporter3.match("state", ["ca"],row3)
   end

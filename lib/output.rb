@@ -21,26 +21,26 @@ module Output
     end
 
     def save_to(csv_file)
-        CSV.open(csv_file.join, "w", headers:true) do |csv|
-          csv << @headers
-          @queue.each do |attendee|
-            csv << [attendee[:first_name], attendee[:last_name],
-            attendee[:email_address], attendee[:zipcode], attendee[:city],
-            attendee[:state], attendee[:street], attendee[:homephone] ]
-          end
+      CSV.open(csv_file.join, "w", headers:true) do |csv|
+        csv << @headers
+        @queue.each do |attendee|
+          csv << [attendee[:first_name], attendee[:last_name],
+          attendee[:email_address], attendee[:zipcode], attendee[:city],
+          attendee[:state], attendee[:street], attendee[:homephone] ]
         end
+      end
     end
 
     def qprint_by(criteria)
-        criteria = criteria.join.to_sym
-        @queue =  @queue.sort_by { |key| key[criteria]}
-        print_format
+      criteria = criteria.join.to_sym
+      @queue =  @queue.sort_by { |key| key[criteria]}
+      print_format
     end
 
     def export(attribute = '', csv)
-        contents = CSV.open csv , headers: true, header_converters: :symbol
-        print_format
-        export_deets(attribute = '', csv)
+      contents = CSV.open csv , headers: true, header_converters: :symbol
+      print_format
+      export_deets(attribute = '', csv)
     end
 
     def export_deets(attribute = '', csv)

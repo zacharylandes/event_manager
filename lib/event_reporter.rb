@@ -15,9 +15,7 @@ class EventReporter
   def load(file = './full_event_attendees.csv')
       delete_attendees
       contents = CSV.open file, headers: true, header_converters: :symbol
-      contents.each do |row|
-        @attendees << row
-      end
+      contents.each { |row| @attendees << row}
       @attendees
   end
 
@@ -40,7 +38,6 @@ class EventReporter
   def delete_queue
     @q = nil
   end
-
 
   def add_to_queue(row)
     make_queue

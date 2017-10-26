@@ -20,7 +20,6 @@ class HelpTest < Minitest::Test
 
     assert_equal count,  h.queue_help("count")
     assert_equal clear,  h.queue_help("clear")
-
   end
 
   def test_it_can_list_the_queue_count_commands

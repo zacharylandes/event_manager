@@ -5,15 +5,14 @@ require './lib/clean'
 
 class CleanTest < Minitest::Test
   include Clean
-    def test_it_can_clean_zipcodes
-      assert_equal  "09922",  clean_zipcodes(9922)
-    end
+  def test_it_can_clean_zipcodes
+    assert_equal  "09922",  clean_zipcodes(9922)
+  end
 
 
-    def test_it_can_clean_input
+  def test_it_can_clean_input
 
-      assert_equal "dani" , clean("first_name  ",["dani  "],[:regdate, "0233"])
-    end
-
+    assert_equal "dani" , clean("first_name  ",["dani  "],[:regdate, "0233"])
+  end
 
 end

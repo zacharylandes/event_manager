@@ -8,17 +8,6 @@ module Clean
     end
   end
 
-  # def arrange(row)
-  #   last_name = row[:last_name]
-  #   first_name = row[:first_name]
-  #   row[:last_name] = first_name
-  #   row[:first_name] = last_name
-  #   phone = row[:zipcode]
-  #   street = row[:city]
-  #   city= row[:state]
-  #   state = row[:add]
-  # end
-
   def clean(attribute,criteria,row)
     row.delete(:regdate)
     row.delete(:"")
