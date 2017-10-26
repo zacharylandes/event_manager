@@ -7,11 +7,17 @@ module Output
         print_format
     end
 
+    def row_order(attendee)
+      [attendee[:first_name], attendee[:last_name],
+       attendee[:email_address] || attendee[:email], attendee[:zipcode],
+       attendee[:city], attendee[:state],
+       attendee[:street]|| attendee[:address],
+       attendee[:homephone]|| attendee[:phone] ]
+    end
+
     def print_loop
       @queue.each_with_index do |attendee, _|
-        puts @format % [attendee[:first_name], attendee[:last_name],
-        attendee[:email_address], attendee[:zipcode], attendee[:city],
-        attendee[:state], attendee[:street], attendee[:homephone] ]
+        puts @format % row_order(attendee)
       end
     end
 
@@ -23,11 +29,7 @@ module Output
     def save_to(csv_file)
       CSV.open(csv_file.join, "w", headers:true) do |csv|
         csv << @headers
-        @queue.each do |attendee|
-          csv << [attendee[:first_name], attendee[:last_name],
-          attendee[:email_address], attendee[:zipcode], attendee[:city],
-          attendee[:state], attendee[:street], attendee[:homephone] ]
-        end
+        @queue.each { |attendee|  csv <<  row_order(attendee) }
       end
     end
 

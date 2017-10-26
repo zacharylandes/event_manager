@@ -50,11 +50,8 @@ class Help
   end
 
   def help_print(*by)
-    if by.join == 'by'
-      p @commands[5]
-    else
-      p @commands[4]
-    end
+    return   p @commands[5]  if by.join == 'by'
+    p @commands[4]
   end
 
   def help_save(*to)

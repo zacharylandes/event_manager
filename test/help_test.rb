@@ -5,7 +5,7 @@ require 'pry'
 require './lib/help'
 
 class HelpTest < Minitest::Test
-  # include Help
+
   def test_it_can_list_all_commands
     h = Help.new
 
